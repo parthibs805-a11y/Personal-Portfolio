@@ -1,0 +1,610 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Parthib Sarma</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=SF+Pro+Display:wght@300;400;500;600;700&family=Dancing+Script:wght@400;500;600;700&family=Great+Vibes&family=Allura&display=swap" rel="stylesheet">
+    <style>
+        /* CSS Variables inspired by Apple's design system */
+        :root {
+            --primary-bg: #000000;
+            --secondary-bg: #1c1c1e;
+            --tertiary-bg: #2c2c2e;
+            --accent-bg: #0a84ff;
+            --text-primary: #ffffff;
+            --text-secondary: #a1a1a6;
+            --border-color: #3a3a3c;
+            --glass-bg: rgba(28, 28, 30, 0.8);
+            --gradient-primary: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --gradient-accent: linear-gradient(90deg, #0a84ff, #5ac8fa);
+            --shadow-primary: 0 8px 32px rgba(0, 0, 0, 0.4);
+            --shadow-glass: 0 8px 32px rgba(31, 38, 135, 0.37);
+        }
+
+        /* Reset and base styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'SF Pro Display', 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--primary-bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Glass morphism header inspired by Apple's modern design */
+        .header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border-bottom: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: var(--text-secondary);
+            text-decoration: none;
+            font-weight: 400;
+            font-size: 0.95rem;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: var(--text-primary);
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: var(--gradient-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero section with space background */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 2rem;
+            padding-top: 8rem; /* Add top padding to account for fixed navbar */
+            background: #000000;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(1.5px 1.5px at 20px 30px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 40px 70px, #fff, transparent),
+                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 130px 80px, #fff, transparent),
+                radial-gradient(2px 2px at 160px 30px, #fff, transparent),
+                radial-gradient(1px 1px at 300px 20px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 250px 50px, #fff, transparent),
+                radial-gradient(1px 1px at 200px 90px, #fff, transparent),
+                radial-gradient(1px 1px at 350px 60px, #fff, transparent),
+                radial-gradient(2px 2px at 100px 120px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 400px 300px;
+            animation: twinkle 8s linear infinite;
+        }
+
+        .hero::after {
+            content: '';
+            position: absolute;
+            top: 10;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(1px 1px at 50px 160px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 150px 200px, #fff, transparent),
+                radial-gradient(1px 1px at 220px 100px, #fff, transparent),
+                radial-gradient(2px 2px at 320px 150px, #fff, transparent),
+                radial-gradient(1px 1px at 80px 250px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 500px 400px;
+            animation: twinkle 12s linear infinite reverse;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 10;
+        }
+
+        .hero-greeting {
+            font-family: 'Great Vibes', cursive;
+            font-size: clamp(4rem, 12vw, 14rem);
+            font-weight: 400;
+            letter-spacing: 0.02em;
+            margin-bottom: 0.5rem; /* Reduced from 1.5rem to 0.5rem */
+            color: #ffffff;
+            animation: fadeInUp 1.5s ease-out;
+        }
+
+        .hero-intro {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(2.5rem, 6vw, 5rem);
+            font-weight: 500;
+            color: #ffffff;
+            margin-bottom: 1rem;
+            letter-spacing: 0.01em;
+            animation: fadeInUp 1.5s ease-out 0.3s both;
+        }
+
+        .hero-name {
+            font-family: 'Allura', cursive;
+            font-size: clamp(3.5rem, 8vw, 10rem);
+            font-weight: 400;
+            letter-spacing: 0.01em;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            animation: fadeInUp 1.5s ease-out 0.6s both;
+        }
+
+        .scroll-indicator {
+            position: absolute;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 24px;
+            height: 40px;
+            border: 2px solid var(--text-secondary);
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .scroll-indicator::before {
+            content: '';
+            position: absolute;
+            top: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 8px;
+            background: var(--text-secondary);
+            border-radius: 2px;
+            animation: scrollBounce 2s infinite;
+        }
+
+        .scroll-indicator:hover {
+            border-color: var(--text-primary);
+        }
+
+        .scroll-indicator:hover::before {
+            background: var(--text-primary);
+        }
+
+        /* About section with TradingView-inspired cards */
+        .about {
+            padding: 8rem 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .section-title {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4rem;
+            letter-spacing: -0.02em;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1rem;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: var(--gradient-accent);
+            border-radius: 2px;
+        }
+
+        .about-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: start;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: var(--text-secondary);
+        }
+
+        .about-text p {
+            margin-bottom: 1.5rem;
+            transition: transform 0.3s ease;
+        }
+
+        .about-text p:hover {
+            transform: translateX(10px);
+            color: var(--text-primary);
+        }
+
+        .about-image-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        .about-image {
+            position: relative;
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: var(--shadow-primary);
+            transition: all 0.4s ease;
+        }
+
+        .about-image::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: var(--gradient-primary);
+            opacity: 0;
+            transition: opacity 0.4s ease;
+            z-index: 1;
+        }
+
+        .about-image:hover::before {
+            opacity: 0.1;
+        }
+
+        .about-image:hover {
+            transform: scale(1.05) rotate(2deg);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+        }
+
+        .about-image img {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            display: block;
+            filter: grayscale(20%);
+            transition: filter 0.4s ease;
+        }
+
+        .about-image:hover img {
+            filter: grayscale(0%);
+        }
+
+        /* Connect section with starfield background */
+        .connect {
+            background: #000000;
+            padding: 6rem 2rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .connect::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: 
+                radial-gradient(1px 1px at 50px 30px, #fff, transparent),
+                radial-gradient(1.5px 1.5px at 150px 50px, #fff, transparent),
+                radial-gradient(1px 1px at 300px 40px, #fff, transparent),
+                radial-gradient(1px 1px at 400px 60px, #fff, transparent),
+                radial-gradient(2px 2px at 100px 80px, #fff, transparent);
+            background-repeat: repeat;
+            background-size: 500px 200px;
+            animation: twinkle 12s linear infinite;
+            opacity: 0.4;
+        }
+
+        .connect-title, .connect-subtitle, .social-grid {
+            position: relative;
+            z-index: 10;
+        }
+
+        .connect-title {
+            font-size: clamp(2rem, 4vw, 3rem);
+            font-weight: 600;
+            margin-bottom: 1rem;
+            background: var(--gradient-accent);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .connect-subtitle {
+            font-size: 1.2rem;
+            color: var(--text-secondary);
+            margin-bottom: 3rem;
+        }
+
+        .social-grid {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background: var(--tertiary-bg);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            text-decoration: none;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .social-link::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--gradient-accent);
+            transition: left 0.3s ease;
+            z-index: 0;
+        }
+
+        .social-link:hover::before {
+            left: 0;
+        }
+
+        .social-link:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-glass);
+            border-color: transparent;
+        }
+
+        .social-link img {
+            width: 24px;
+            height: 24px;
+            position: relative;
+            z-index: 1;
+            filter: brightness(0) invert(1);
+            transition: filter 0.3s ease;
+        }
+
+        .social-link:hover img {
+            filter: brightness(0) invert(1);
+        }
+
+        /* Simplified Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes twinkle {
+            0% {
+                opacity: 0.3;
+            }
+            50% {
+                opacity: 1;
+            }
+            100% {
+                opacity: 0.3;
+            }
+        }
+
+        @keyframes scrollBounce {
+            0%, 20% {
+                transform: translateX(-50%) translateY(0);
+            }
+            50% {
+                transform: translateX(-50%) translateY(10px);
+            }
+            80%, 100% {
+                transform: translateX(-50%) translateY(0);
+            }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 1rem;
+            }
+
+            .nav-links {
+                gap: 1.5rem;
+            }
+
+            .nav-links a {
+                font-size: 0.9rem;
+            }
+
+            .hero {
+                padding: 1rem;
+                padding-top: 6rem; /* Adjust for mobile navbar height */
+            }
+
+            .about {
+                padding: 4rem 1rem;
+            }
+
+            .about-container {
+                grid-template-columns: 1fr;
+                gap: 3rem;
+                text-align: center;
+            }
+
+            .connect {
+                padding: 4rem 1rem;
+            }
+
+            .social-grid {
+                gap: 1.5rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero {
+                padding-top: 5rem; /* Further adjust for smaller mobile screens */
+            }
+
+            .hero-greeting {
+                line-height: 1.1;
+            }
+
+            .social-link {
+                width: 50px;
+                height: 50px;
+            }
+
+            .social-link img {
+                width: 20px;
+                height: 20px;
+            }
+        }
+
+        /* Smooth scrolling */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Selection styling */
+        ::selection {
+            background: rgba(10, 132, 255, 0.3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Glass morphism header inspired by Apple's navigation -->
+    <header class="header">
+        <div class="nav-container">
+            <div class="logo">PS</div>
+            <nav>
+                <ul class="nav-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero section with Apple-style typography -->
+    <section class="hero" id="home">
+        <div class="hero-content">
+            <h1 class="hero-greeting">Hi !!!</h1>
+            <p class="hero-intro">It's me,</p>
+            <h2 class="hero-name">Parthib Sarma</h2>
+        </div>
+        <div class="scroll-indicator" onclick="document.getElementById('about').scrollIntoView()"></div>
+    </section>
+
+    <!-- About section with TradingView-inspired layout -->
+    <section class="about" id="about">
+        <h2 class="section-title">ABOUT</h2>
+        <div class="about-container">
+            <div class="about-text">
+                <p>Hi, I'm Parthib Sarma   "a curious mind who would never quite fit into the mould of a "typical student." While the classrooms buzzed with lectures and note-taking, I was the one lost in my own sweet world, wondering why the world behaves the way they do. After all, the world is a culmination of hundreds and thousands of human minds working together in reaction to each other.</p>
+                
+                <p>I've never really enjoyed sitting through lectures or following textbooks, but give me something meaningful, and I'm all in, already forgotten everything else in the world. From basic programming to robotics, spirituality to geopolitics and human psychology, I have dipped my hands into everything. Among these, Art has been one of the major driving forces of my life. Whether it's adorning myself in style or the art of communicating with people, or even paying attention to a luxurious timepiece. This attention has been all over. Not to mention, this drive had also led me to winning many art competitions, including a city-level one. 😅😋</p>
+                
+                <p>I also had a keen interest in technology from my childhood. From AIs to LLMs, to quantum computing, you name it. Maybe even this weird combination led me to build this website. After all, could art and technology had a better love story than this ?😜</p>
+                
+                <p>I'm the kind of person who's always looking forward, instead of backwards. While the past has its lessons, it's the future that truly excites me. Ideas, possibilities, what could be - that's where my mind loves to wander. Because there is no point of being sad about your marks when curiosity drives your way.</p>
+                
+                <p>Today, after spending almost two decades of my life driving this path. I'm willing to channelise all this curiosity, mostly as a way to make sense of my thoughts and hopefully connect with others who find weird things interesting too. So if you have ideas to share, questions to ask, or just want to chat about anything from fashion to philosophy to finely crafted timepieces, or even to some newly developed technology, feel free to reach out to me. I might be a bit quiet at first, but once you click, be ready my never-ending talks that may run all night.😄⌚</p>
+            </div>
+            <div class="about-image-container">
+                <div class="about-image">
+                    <img src="Parthib Sarma.png" alt="Parthib Sarma" />
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Connect section with Apple-inspired social buttons -->
+    <section class="connect" id="contact">
+        <h2 class="connect-title">Feel Free to Connect With Me </h2>
+        <p class="connect-subtitle">You can connect with me on</p>
+        <div class="social-grid">
+            <a href="https://www.instagram.com/parthib_sarma?igsh=ZzdrY2hoY2ZsY3Zs" target="_blank" class="social-link" title="Instagram">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/9.12.0/instagram.svg" alt="Instagram" />
+            </a>
+            <a href="http://www.linkedin.com/in/parthib-sarma123" target="_blank" class="social-link" title="LinkedIn">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/9.12.0/linkedin.svg" alt="LinkedIn" />
+            </a>
+            <a href="https://x.com/HelloBuddy15595" target="_blank" class="social-link" title="X">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/9.12.0/x.svg" alt="X" />
+            </a>
+            <a href="https://mastodon.social/@Mastradon" target="_blank" class="social-link" title="Mastodon">
+                <img src="https://cdnjs.cloudflare.com/ajax/libs/simple-icons/9.12.0/mastodon.svg" alt="Mastodon" />
+            </a>
+        </div>
+    </section>
+</body>
+</html>
